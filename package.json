@@ -1,0 +1,50 @@
+{
+    "name": "line-chart",
+    "version": "1.0.0",
+    "description": "simple line chart with D3js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/suxxus-svg/d3js-line-chart-creation.git"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "autoprefixer": "6.3.6",
+        "browser-sync": "2.12.8",
+        "clean-css": "3.4.12",
+        "eslint": "2.10.0",
+        "eslint-config-eslint": "3.0.0",
+        "html-minifier": "2.1.3",
+        "postcss": "5.0.21",
+        "postcss-cli": "2.5.2",
+        "proxy-middleware": "0.15.0",
+        "uglify": "0.1.5",
+        "updtr": "0.1.14",
+        "watch-cli": "0.2.1"
+    },
+    "engines": {
+        "node": ">=5.10.0",
+        "npm": ">=3.8.0"
+    },
+    "scripts": {
+        "lint": "eslint --fix --color ./src/scripts/*.js || true",
+        "browsersync": "node browser-sync",
+        "build:scripts": "cat ./src/scripts/*.js  > ./build/bundle.js",
+        "build:markup": "cp -rf ./src/*.html ./build",
+        "build:css": "postcss -c postcssconfig.json",
+        "build": "npm run build:markup & npm run build:scripts & npm run build:css",
+        "clean": "rm -rf build/* & rm -rf ./dist/*",
+        "check": "npm outdated --depth=0",
+        "dev": "watch -p 'src/**/*' -c 'npm run build -s'",
+        "dist": "npm run build && cat build/*.css | cleancss -o dist/bundle.css && npm run minify:html && npm run uglify",
+        "minify:html": "html-minifier --collapse-whitespace build/index.html -o  dist/index.html",
+        "prebuild": "npm run clean & npm run lint",
+        "prepublish:create": "mkdir build && mkdir dist",
+        "prepublish": "npm run prepublish:create && npm run dist",
+        "start": "node server/server.js",
+        "uglify": "uglifyjs ./build/bundle.js --stats --mangle --output ./dist/bundle.js",
+        "update": "updtr"
+    },
+    "author": "SUXXUS",
+    "license": "ISC",
+    "keywords": ["studies", "d3js"]
+}
